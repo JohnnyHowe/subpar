@@ -289,7 +289,7 @@ MonoBehaviour:
   steeringPlane: {fileID: 1580905147}
   minSteeringPlaneScale: 0.5
   maxSteeringPlaneScale: 3
-  powerMultiplier: 50
+  powerMultiplier: 100
   minPower: 0.3
   maxPower: 4
 --- !u!114 &80516440

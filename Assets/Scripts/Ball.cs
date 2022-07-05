@@ -42,7 +42,7 @@ public class Ball : MonoBehaviour
     }
 
     public void Shoot() {
-        ThisRigidBody.AddForce(GetShootDirection() * power * powerMultiplier);
+        ThisRigidBody.AddForce(GetShootDirection() * ClampledPower * powerMultiplier);
     }
 
     public void ShowSteering(bool show) {

@@ -13,7 +13,7 @@ public class GameStateController : MonoBehaviour
     }
 
     [ReadOnly] [SerializeField] private GameState state = GameState.aiming;
-    [SerializeField] bool verbose = true;
+    [SerializeField] bool verbose = false;
 
     public GameState State {
         get => state;
