@@ -8,6 +8,7 @@ public class InputController : MonoBehaviour
     [SerializeField] Collider inputRaycastPlane;
     [SerializeField] Transform originPointer;
     [SerializeField] Transform currentPointer;
+    [SerializeField] GameStateController gameStateController;
 
     void Update()
     {
@@ -27,7 +28,10 @@ public class InputController : MonoBehaviour
             ball.SetPower((startTouch - endTouch).magnitude);
         }
 
-        if (TouchInput.Instance.pointerUp) ball.Shoot();
+        if (TouchInput.Instance.pointerUp) {
+            gameStateController.State = GameStateController.GameState.rolling;
+            ball.Shoot();
+        }
         ball.ShowSteering(TouchInput.Instance.pointerHeld);
         originPointer.gameObject.SetActive(TouchInput.Instance.pointerHeld);
         currentPointer.gameObject.SetActive(TouchInput.Instance.pointerHeld);

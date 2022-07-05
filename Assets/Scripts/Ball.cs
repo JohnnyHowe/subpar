@@ -14,15 +14,18 @@ public class Ball : MonoBehaviour
     [SerializeField] float minPower = 1f;
     [SerializeField] float maxPower = 1f;
 
-    Rigidbody rigidBody;
+    Rigidbody ThisRigidBody {
+        get {
+            if (thisRigidBody == null) thisRigidBody = GetComponent<Rigidbody>();
+            return thisRigidBody;
+        }
+    }
+    Rigidbody thisRigidBody;
+
     private float steeringAngle = 0;    // relative to -z
     private float power = 0;
     private float ClampledPower {
         get => Mathf.Clamp(power, minPower, maxPower);
-    }
-
-    void Start() {
-        rigidBody = GetComponent<Rigidbody>();
     }
 
     void Update() {
@@ -39,7 +42,7 @@ public class Ball : MonoBehaviour
     }
 
     public void Shoot() {
-        rigidBody.AddForce(GetShootDirection() * power * powerMultiplier);
+        ThisRigidBody.AddForce(GetShootDirection() * power * powerMultiplier);
     }
 
     public void ShowSteering(bool show) {
@@ -48,5 +51,13 @@ public class Ball : MonoBehaviour
 
     private Vector3 GetShootDirection() {
         return Quaternion.AngleAxis(steeringAngle + 90, Vector3.up) * Vector3.right;
+    }
+
+    public void SetMoveable(bool moveable) {
+        ThisRigidBody.isKinematic = !moveable;
+    }
+
+    public float GetSpeed() {
+        return ThisRigidBody.velocity.magnitude;
     }
 }
