@@ -7,16 +7,22 @@ public class Ball : MonoBehaviour
     [Header("Visual Settings")]
     [SerializeField] private Transform steeringPlaneForward;
     [SerializeField] private Transform steeringPlaneRear;
+    [SerializeField] Transform aimingLine;
     [SerializeField] Transform ring;
-    [SerializeField] float turnSpeed = 1f;
     [SerializeField] private float minSteeringPlaneScale = 0.5f;
     [SerializeField] private float maxSteeringPlaneScale = 1f;
     [SerializeField] float ringSpinSpeed = 90f;
     [SerializeField] float arrowCenterOffset = 1f;
+    [SerializeField] float aimSpeed = 0.5f;
     [Header("Shoot Settings")]
+    [SerializeField] GameStateController gameStateController;
     [SerializeField] float powerMultiplier = 1f;
-    [SerializeField] float minPower = 1f;
-    [SerializeField] float maxPower = 1f;
+    [SerializeField] Collider inputRaycastPlane;
+    [SerializeField] float minAimDistance = 0.05f;
+    [SerializeField] float powerSensitivity = 1f;
+
+    bool pointerMovedEnough = false;
+    Vector3 lastEndTouch = Vector3.zero;
 
     Rigidbody ThisRigidBody
     {
@@ -28,32 +34,91 @@ public class Ball : MonoBehaviour
     }
     Rigidbody thisRigidBody;
 
-    private bool showingSteering = false;
+    private bool showingSteering = true;
     private float steeringAngle = 0;    // relative to -z
-    private float power = 0;
-    private float ClampledPower
-    {
-        get => Mathf.Clamp(power, minPower, maxPower);
-    }
+    private float power = 0;    // between 0 and 1
     bool moveable = true;
+
+    void Start()
+    {
+        ShowSteering(false);
+    }
 
     void Update()
     {
-        UpdateSteeringPlanes();
+        UpdateSteeringArrows();
 
         ring.gameObject.SetActive(!moveable);
         if (!moveable) ring.transform.localEulerAngles += Vector3.up * ringSpinSpeed * Time.deltaTime;
+
+        bool aiming = false;
+
+        if (TouchInput.Instance.pointerHeld && gameStateController.State == GameStateController.GameState.aiming)
+        {
+            if (!pointerMovedEnough)
+            {
+                float touchChange = (TouchInput.Instance.pointerStartPosition - TouchInput.Instance.pointerPosition).magnitude;
+                if (touchChange > minAimDistance)
+                {
+                    pointerMovedEnough = true;
+                }
+            }
+            else
+            {
+                bool justStarted = !aiming;
+                aiming = true;
+
+                Vector3? nStartTouch = GetPlanePosition(TouchInput.Instance.pointerStartPosition);
+                Vector3? nEndTouch = GetPlanePosition(TouchInput.Instance.pointerPosition);
+                if (nStartTouch == null || nEndTouch == null) return;
+
+                Vector3 startTouch = (Vector3)nStartTouch;
+                Vector3 rawEndTouch = (Vector3)nEndTouch;
+                power = Mathf.Clamp((startTouch - rawEndTouch).magnitude * powerSensitivity, 0, 1);
+                Vector3 goalEndTouch = startTouch + (rawEndTouch - startTouch).normalized * power;
+                Vector3 endTouch = Vector3.Lerp(lastEndTouch, goalEndTouch, justStarted? 1: Mathf.Min(1, Time.deltaTime * aimSpeed));
+                lastEndTouch = endTouch;
+
+                float aimAngle = Vector3.SignedAngle(Vector3.forward, (endTouch - startTouch), Vector3.up);
+                SetSteering(aimAngle);
+                power = Mathf.Clamp((startTouch - endTouch).magnitude, 0, 1);
+
+                // aim line
+                float aimLineLength = (startTouch - endTouch).magnitude / powerSensitivity;
+                aimingLine.transform.localScale = new Vector3(
+                    aimingLine.transform.localScale.x,
+                    aimingLine.transform.localScale.y,
+                    aimLineLength / 10f
+                );
+
+                aimingLine.transform.localPosition = (endTouch - startTouch) * 0.5f / powerSensitivity + startTouch;
+                aimingLine.localEulerAngles = Vector3.up * aimAngle;
+            }
+        }
+        else
+        {
+            pointerMovedEnough = false;
+        }
+
+        if (TouchInput.Instance.pointerUp && gameStateController.State == GameStateController.GameState.aiming)
+        {
+            gameStateController.State = GameStateController.GameState.rolling;
+            Shoot();
+        }
+
+        ShowSteering(aiming);
+
     }
+
 
     // ============================================================================================
     // Visual Effects 
     // ============================================================================================
 
-    private void UpdateSteeringPlanes(bool instant = false)
+    private void UpdateSteeringArrows(bool instant = false)
     {
-        float scale = Mathf.Lerp(minSteeringPlaneScale, maxSteeringPlaneScale, (ClampledPower - minPower) / (maxPower - minPower));
-        float t = instant ? 1 : Time.deltaTime * turnSpeed;
-        float rotation = Mathf.LerpAngle(steeringPlaneForward.eulerAngles.y, steeringAngle, t);
+        float scale = Mathf.Lerp(minSteeringPlaneScale, maxSteeringPlaneScale, power);
+        float rotation = steeringAngle;
 
         {
             steeringPlaneForward.eulerAngles = Vector3.up * rotation;
@@ -87,27 +152,37 @@ public class Ball : MonoBehaviour
             showingSteering = show;
             steeringPlaneForward.gameObject.SetActive(showingSteering);
             steeringPlaneRear.gameObject.SetActive(showingSteering);
-            UpdateSteeringPlanes(true);
+            aimingLine.gameObject.SetActive(showingSteering);
+            UpdateSteeringArrows(true);
         }
     }
 
-    public void SetSteering(float angle)
+    Vector3? GetPlanePosition(Vector2 screenPosition)
     {
-        steeringAngle = angle;
-    }
-
-    public void SetPower(float power)
-    {
-        this.power = power;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector2(screenPosition.x * Screen.width, screenPosition.y * Screen.height));
+        RaycastHit hit;
+        if (inputRaycastPlane.Raycast(ray, out hit, 100.0f))
+        {
+            return hit.point;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     // ============================================================================================
     // Mechanics 
     // ============================================================================================
 
+    public void SetSteering(float angle)
+    {
+        steeringAngle = angle;
+    }
+
     public void Shoot()
     {
-        ThisRigidBody.AddForce(GetShootDirection() * ClampledPower * powerMultiplier);
+        ThisRigidBody.AddForce(GetShootDirection() * power * powerMultiplier);
     }
 
     private Vector3 GetShootDirection()
