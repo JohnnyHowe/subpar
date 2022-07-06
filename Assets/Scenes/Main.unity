@@ -171,8 +171,7 @@ GameObject:
   - component: {fileID: 80516434}
   - component: {fileID: 80516439}
   - component: {fileID: 80516440}
-  - component: {fileID: 80516441}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,16 +291,16 @@ MonoBehaviour:
   steeringPlaneRear: {fileID: 2065130030}
   aimingLine: {fileID: 242298851}
   ring: {fileID: 599090191}
-  minSteeringPlaneScale: 0.1
-  maxSteeringPlaneScale: 0.5
+  minSteeringPlaneScale: 0.25
+  maxSteeringPlaneScale: 1
   ringSpinSpeed: 90
   arrowCenterOffset: 2
   aimSpeed: 25
   gameStateController: {fileID: 1866318365}
-  powerMultiplier: 500
+  powerMultiplier: 100
   inputRaycastPlane: {fileID: 990780579}
   minAimDistance: 0.05
-  powerSensitivity: 0.3
+  powerSensitivity: 0.5
 --- !u!114 &80516440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,26 +315,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
---- !u!114 &80516441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80516433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f77ef6c4851a49c4eb74fabefa790a3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secondPassCamera: {fileID: 1615695411}
-  secondPassCameraAim:
-    serializedVersion: 2
-    m_Bits: 768
-  secondPassCameraRoll:
-    serializedVersion: 2
-    m_Bits: 256
-  gameStateController: {fileID: 1866318365}
 --- !u!1 &242298850
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,7 +668,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 648
+    m_Bits: 136
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1272,7 +1251,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 776
+    m_Bits: 264
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
