@@ -28,6 +28,7 @@ public class Ball : MonoBehaviour
     }
     Rigidbody thisRigidBody;
 
+    private bool showingSteering = false;
     private float steeringAngle = 0;    // relative to -z
     private float power = 0;
     private float ClampledPower
@@ -48,18 +49,27 @@ public class Ball : MonoBehaviour
     // Visual Effects 
     // ============================================================================================
 
-    private void UpdateSteeringPlanes()
+    private void UpdateSteeringPlanes(bool instant = false)
     {
         float scale = Mathf.Lerp(minSteeringPlaneScale, maxSteeringPlaneScale, (ClampledPower - minPower) / (maxPower - minPower));
-        float rotation = Mathf.LerpAngle(steeringPlaneForward.eulerAngles.y, steeringAngle, Time.deltaTime * turnSpeed);
+        float t = instant ? 1 : Time.deltaTime * turnSpeed;
+        float rotation = Mathf.LerpAngle(steeringPlaneForward.eulerAngles.y, steeringAngle, t);
 
-        steeringPlaneForward.eulerAngles = Vector3.up * rotation;
-        steeringPlaneForward.localScale = new Vector3(steeringPlaneForward.localScale.x, steeringPlaneForward.localScale.y, scale);
-        steeringPlaneForward.localPosition = RotatePointAroundPivot(Vector3.back * (scale * 5 + arrowCenterOffset), Vector3.zero, Vector3.up * rotation);
+        {
+            steeringPlaneForward.eulerAngles = Vector3.up * rotation;
+            steeringPlaneForward.localScale = new Vector3(steeringPlaneForward.localScale.x, steeringPlaneForward.localScale.y, scale);
+            Vector3 newPos = RotatePointAroundPivot(Vector3.back * (scale * 5 + arrowCenterOffset), Vector3.zero, Vector3.up * rotation);
+            newPos.y = steeringPlaneForward.localPosition.y;
+            steeringPlaneForward.localPosition = newPos;
+        }
 
-        steeringPlaneRear.eulerAngles = Vector3.up * rotation;
-        steeringPlaneRear.localScale = new Vector3(steeringPlaneRear.localScale.x, steeringPlaneRear.localScale.y, scale);
-        steeringPlaneRear.localPosition = RotatePointAroundPivot(Vector3.forward * (scale * 5 + arrowCenterOffset), Vector3.zero, Vector3.up * rotation);
+        {
+            steeringPlaneRear.eulerAngles = Vector3.up * rotation;
+            steeringPlaneRear.localScale = new Vector3(steeringPlaneRear.localScale.x, steeringPlaneRear.localScale.y, scale);
+            Vector3 newPos = RotatePointAroundPivot(Vector3.forward * (scale * 5 + arrowCenterOffset), Vector3.zero, Vector3.up * rotation);
+            newPos.y = steeringPlaneForward.localPosition.y;
+            steeringPlaneRear.localPosition = newPos;
+        }
     }
 
     public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)
@@ -72,8 +82,13 @@ public class Ball : MonoBehaviour
 
     public void ShowSteering(bool show)
     {
-        steeringPlaneForward.gameObject.SetActive(show);
-        steeringPlaneRear.gameObject.SetActive(show);
+        if (show != showingSteering)
+        {
+            showingSteering = show;
+            steeringPlaneForward.gameObject.SetActive(showingSteering);
+            steeringPlaneRear.gameObject.SetActive(showingSteering);
+            UpdateSteeringPlanes(true);
+        }
     }
 
     public void SetSteering(float angle)

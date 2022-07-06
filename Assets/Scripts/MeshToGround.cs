@@ -19,7 +19,7 @@ public class MeshToGround : MonoBehaviour
         originalVertices = meshFilter.mesh.vertices;
     }
 
-    void Update()
+    void LateUpdate()
     {
         UpdateMesh();
     }
