@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Abstraction on simple touch/mouse input
 /// </summary>
-public class TouchInput: Singleton<TouchInput>
+public class TouchInput: AppSystem<TouchInput>
 {
     // positions are between (0, 0) = bottom left and (1, 1) = top right
     public Vector2 pointerStartPosition;

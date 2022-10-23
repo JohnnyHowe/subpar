@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class GameStateController : MonoBehaviour
+
+public class GameStateController : GameSingleton<GameStateController>
 {
     public enum GameState
     {

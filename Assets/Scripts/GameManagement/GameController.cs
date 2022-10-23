@@ -3,33 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(GameStateController))]
-public class GameController : MonoBehaviour
+public class GameController : GameSingleton<GameController>
 {
-    [SerializeField] Ball ball;
+    [SerializeField] CachedMember<Ball> ball;
     [SerializeField] float minBallY = -1f;
     [SerializeField] float maxStillSpeed = 0.1f;
     [SerializeField] float minStillTime = 0.5f;
     float currentStillTime = 0f;
 
-    GameStateController gameStateController;
-
-    void Awake()
+    void Start()
     {
-        gameStateController = GetComponent<GameStateController>();
+        ball = new CachedMember<Ball>(GameObject.FindGameObjectWithTag("Player").GetComponent<Ball>);
 
-        gameStateController.onAimingStart.AddListener(OnAimStart);
-        gameStateController.onRollingStart.AddListener(OnRollingStart);
+        GameStateController.Instance.onAimingStart.AddListener(OnAimStart);
+        GameStateController.Instance.onRollingStart.AddListener(OnRollingStart);
     }
 
     void FixedUpdate()
     {
-        if (ball.transform.position.y < minBallY) Restart();
+        if (ball.Value.transform.position.y < minBallY) Restart();
 
-        if (gameStateController.State == GameStateController.GameState.rolling)
+        if (GameStateController.Instance.State == GameStateController.GameState.rolling)
         {
 
-            if (ball.GetSpeed() < maxStillSpeed)
+            if (ball.Value.GetSpeed() < maxStillSpeed)
             {
                 currentStillTime += Time.deltaTime;
             }
@@ -41,14 +38,14 @@ public class GameController : MonoBehaviour
             if (currentStillTime > minStillTime)
             {
                 currentStillTime = 0;
-                gameStateController.State = GameStateController.GameState.aiming;
+                GameStateController.Instance.State = GameStateController.GameState.aiming;
             }
         }
         else
         {
-            if (ball.GetSpeed() > maxStillSpeed)
+            if (ball.Value.GetSpeed() > maxStillSpeed)
             {
-                gameStateController.State = GameStateController.GameState.rolling;
+                GameStateController.Instance.State = GameStateController.GameState.rolling;
             }
         }
     }
@@ -61,12 +58,12 @@ public class GameController : MonoBehaviour
     void OnAimStart()
     {
         // inputController.enabled = true;
-        ball.SetMoveable(false);
+        ball.Value.SetMoveable(false);
     }
 
     void OnRollingStart()
     {
         // inputController.enabled = false;
-        ball.SetMoveable(true);
+        ball.Value.SetMoveable(true);
     }
 }

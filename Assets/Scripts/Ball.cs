@@ -15,7 +15,6 @@ public class Ball : MonoBehaviour
     [SerializeField] float arrowCenterOffset = 1f;
     [SerializeField] float aimSpeed = 0.5f;
     [Header("Shoot Settings")]
-    [SerializeField] GameStateController gameStateController;
     [SerializeField] float powerMultiplier = 1f;
     [SerializeField] Collider inputRaycastPlane;
     [SerializeField] float minAimDistance = 0.05f;
@@ -53,7 +52,7 @@ public class Ball : MonoBehaviour
 
         bool aiming = false;
 
-        if (TouchInput.Instance.pointerHeld && gameStateController.State == GameStateController.GameState.aiming)
+        if (TouchInput.Instance.pointerHeld && GameStateController.Instance.State == GameStateController.GameState.aiming)
         {
             if (!pointerMovedEnough)
             {
@@ -100,9 +99,9 @@ public class Ball : MonoBehaviour
             pointerMovedEnough = false;
         }
 
-        if (TouchInput.Instance.pointerUp && gameStateController.State == GameStateController.GameState.aiming)
+        if (TouchInput.Instance.pointerUp && GameStateController.Instance.State == GameStateController.GameState.aiming)
         {
-            gameStateController.State = GameStateController.GameState.rolling;
+            GameStateController.Instance.State = GameStateController.GameState.rolling;
             Shoot();
         }
 
