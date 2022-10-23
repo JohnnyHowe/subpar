@@ -16,40 +16,56 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        gameStateController = GetComponent<GameStateController>();        
+        gameStateController = GetComponent<GameStateController>();
 
         gameStateController.onAimingStart.AddListener(OnAimStart);
         gameStateController.onRollingStart.AddListener(OnRollingStart);
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (ball.transform.position.y < minBallY) Restart();
 
-        if (gameStateController.State == GameStateController.GameState.rolling) {
+        if (gameStateController.State == GameStateController.GameState.rolling)
+        {
 
-            if (ball.GetSpeed() < maxStillSpeed) {
+            if (ball.GetSpeed() < maxStillSpeed)
+            {
                 currentStillTime += Time.deltaTime;
-            } else {
+            }
+            else
+            {
                 currentStillTime = 0;
             }
 
-            if (currentStillTime > minStillTime) {
+            if (currentStillTime > minStillTime)
+            {
                 currentStillTime = 0;
                 gameStateController.State = GameStateController.GameState.aiming;
             }
         }
+        else
+        {
+            if (ball.GetSpeed() > maxStillSpeed)
+            {
+                gameStateController.State = GameStateController.GameState.rolling;
+            }
+        }
     }
 
-    void Restart() {
+    void Restart()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    void OnAimStart() {
+    void OnAimStart()
+    {
         // inputController.enabled = true;
         ball.SetMoveable(false);
     }
 
-    void OnRollingStart() {
+    void OnRollingStart()
+    {
         // inputController.enabled = false;
         ball.SetMoveable(true);
     }

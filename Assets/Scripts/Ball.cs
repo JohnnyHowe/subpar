@@ -193,7 +193,7 @@ public class Ball : MonoBehaviour
     public void SetMoveable(bool moveable)
     {
         this.moveable = moveable;
-        ThisRigidBody.isKinematic = !moveable;
+        // ThisRigidBody.isKinematic = !moveable;
     }
 
     public float GetSpeed()
