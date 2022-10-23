@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: fbfc34add317bd5418643834801cfbaf, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6d7746557b8cf499fd663e41735d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectHit: {fileID: 0}
+  objectsHit: []
   parentObjectHit: {fileID: 0}
   fadeTo: 0.5
 --- !u!1 &116122610
@@ -1074,6 +1074,7 @@ GameObject:
   - component: {fileID: 972897708}
   - component: {fileID: 972897707}
   - component: {fileID: 972897706}
+  - component: {fileID: 972897709}
   m_Layer: 7
   m_Name: Platform (4)
   m_TagString: Untagged
@@ -1159,6 +1160,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972897704}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &972897709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972897704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51593ba48a4eb5d439d629f221424386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 10
+  fadeTo: 1
+  fadeFrom: 0.5
 --- !u!1 &990780577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,6 +1418,7 @@ GameObject:
   - component: {fileID: 1315338586}
   - component: {fileID: 1315338585}
   - component: {fileID: 1315338584}
+  - component: {fileID: 1315338587}
   m_Layer: 7
   m_Name: Platform (3)
   m_TagString: Untagged
@@ -1487,6 +1504,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315338582}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1315338587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315338582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51593ba48a4eb5d439d629f221424386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 10
+  fadeTo: 1
+  fadeFrom: 0.5
 --- !u!1 &1387624830
 GameObject:
   m_ObjectHideFlags: 0
