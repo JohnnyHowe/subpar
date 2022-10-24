@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 # OS dependent bits
 **.DS_Store
+Assets/StreamingAssets/UnityServicesProjectConfiguration.json.meta
+Assets/StreamingAssets/UnityServicesProjectConfiguration.json
