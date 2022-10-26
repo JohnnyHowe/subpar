@@ -10,6 +10,7 @@ public class ConstantMovement : MonoBehaviour
     [SerializeField] private bool constantVelocity = false;
     [SerializeField] private float roundTripTime = 1;
     [SerializeField] private float smoothSpeed = 0f;
+    [SerializeField] private float resetTime = 0f;
 
     private float t;
     private List<float> consistentSpeedMultipliers;
@@ -34,36 +35,44 @@ public class ConstantMovement : MonoBehaviour
             CalculatePath();
         }
 
-        t = t % positionsContainer.childCount;
-        int p1t = Mathf.FloorToInt(t);
-        int p2t = (p1t + 1) % positionsContainer.childCount;
+        float speed = 1;
+        if (t < 1) {
+            int lastNodeIndex = Mathf.FloorToInt(t * positionsContainer.childCount);
+            float speedVelocitySmoothingFactor = constantVelocity ? consistentSpeedMultipliers[lastNodeIndex] : 1;
 
-        float speed;
-        if (constantVelocity)
-        {
-            speed = consistentSpeedMultipliers[p1t] / roundTripTime;
+            speed = 1f / roundTripTime * speedVelocitySmoothingFactor;
+            MoveObject(t, smoothSpeed == 0 ? 1 : Time.deltaTime * smoothSpeed * positionsContainer.childCount);
         }
-        else
-        {
-            speed = positionsContainer.childCount / roundTripTime;
-        }
-        float transformT = smoothSpeed == 0? 1: Time.deltaTime * smoothSpeed * positionsContainer.childCount;
+
+        t += Time.fixedDeltaTime * speed;
+        t = t % (1 + resetTime);
+    }
+
+    /// <summary>
+    /// Move the object to a position and rotation based on t
+    /// 0 <= t < 1
+    /// </summary>
+    private void MoveObject(float t, float smoothT)
+    {
+        float fullT = t * positionsContainer.childCount;
+        float nodeLevelT = fullT % 1;
+
+        int p1t = Mathf.FloorToInt(fullT);
+        int p2t = (p1t + 1) % positionsContainer.childCount;
 
         Vector3 p1 = positionsContainer.GetChild(p1t).position;
         Vector3 p2 = positionsContainer.GetChild(p2t).position;
 
-        Vector3 targetPos = Vector3.Lerp(p1, p2, t % 1);
-        Vector3 nextPos = Vector3.Lerp(movingObject.transform.position, targetPos, transformT);
+        Vector3 targetPos = Vector3.Lerp(p1, p2, nodeLevelT);
+        Vector3 nextPos = Vector3.Lerp(movingObject.transform.position, targetPos, smoothT);
         movingObject.MovePosition(nextPos);
 
         Quaternion r1 = positionsContainer.GetChild(p1t).rotation;
         Quaternion r2 = positionsContainer.GetChild(p2t).rotation;
 
-        Quaternion targetRotation = Quaternion.Lerp(r1, r2, t % 1);
-        Quaternion nextRot = Quaternion.Lerp(movingObject.transform.rotation, targetRotation, transformT);
+        Quaternion targetRotation = Quaternion.Lerp(r1, r2, nodeLevelT);
+        Quaternion nextRot = Quaternion.Lerp(movingObject.transform.rotation, targetRotation, smoothT);
         movingObject.MoveRotation(nextRot);
-
-        t += Time.fixedDeltaTime * speed;
     }
 
     private void CalculatePathDistances()
@@ -73,7 +82,7 @@ public class ConstantMovement : MonoBehaviour
         for (int i = 0; i < positionsContainer.childCount; i++)
         {
             float currentDistance = (
-                positionsContainer.GetChild(i % positionsContainer.childCount).position - 
+                positionsContainer.GetChild(i % positionsContainer.childCount).position -
                 positionsContainer.GetChild((i + 1) % positionsContainer.childCount).position
                 ).magnitude;
 
@@ -81,8 +90,9 @@ public class ConstantMovement : MonoBehaviour
             sum += currentDistance;
         }
         List<float> speedMultipliers = new List<float>();
-        for (int i = 0; i < positionsContainer.childCount; i++) {
-            speedMultipliers.Add(sum / distances[i]);
+        for (int i = 0; i < positionsContainer.childCount; i++)
+        {
+            speedMultipliers.Add(sum / (distances[i] * positionsContainer.childCount));
         }
         consistentSpeedMultipliers = speedMultipliers;
     }
