@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -10,12 +11,18 @@ public class Chute : MonoBehaviour
     [SerializeField] private Vector3 localExitVelocity = Vector3.up;
     [SerializeField] private float releaseDelay = 1f;
     private List<IChuteAble> doNotTeleport;
+    CancellationTokenSource cancellationTokenSource;
 
     void Awake()
     {
         doNotTeleport = new List<IChuteAble>();
         trigger.onTriggerEnter.AddListener((c) => OnTriggerEnter(c));
         trigger.onTriggerExit.AddListener((c) => OnTriggerExit(c));
+        cancellationTokenSource = new CancellationTokenSource();
+    }
+
+    void OnDestroy() {
+        cancellationTokenSource.Cancel();
     }
 
     void OnTriggerEnter(Collider collider)
@@ -45,14 +52,16 @@ public class Chute : MonoBehaviour
             chuteAble.SetFrozen(true);
             chuteAble.SetPosition(trigger.transform.position);
             chuteAble.SetVelocity(Vector3.zero);
-            UnfreezeInTime(chuteAble, releaseDelay);
+            UnfreezeInTime(chuteAble, releaseDelay, cancellationTokenSource.Token);
         }
     }
 
-    private async void UnfreezeInTime(IChuteAble chuteAble, float seconds)
+    private async void UnfreezeInTime(IChuteAble chuteAble, float seconds, CancellationToken cancellationToken)
     {
         await Task.Delay(Mathf.FloorToInt(seconds * 1000));
-        chuteAble.SetFrozen(false);
-        chuteAble.SetVelocity(transform.TransformVector(localExitVelocity));
+        if (!cancellationToken.IsCancellationRequested) {
+            chuteAble.SetFrozen(false);
+            chuteAble.SetVelocity(transform.TransformVector(localExitVelocity));
+        } 
     }
 }
