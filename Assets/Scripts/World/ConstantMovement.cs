@@ -11,6 +11,8 @@ public class ConstantMovement : MonoBehaviour
     [SerializeField] private float roundTripTime = 1;
     [SerializeField] private float smoothSpeed = 0f;
     [SerializeField] private float resetTime = 0f;
+    [Header("Debug Bits (All Optional)")]
+    [SerializeField] private Transform targetTransform;
 
     private float t;
     private List<float> consistentSpeedMultipliers;
@@ -36,13 +38,14 @@ public class ConstantMovement : MonoBehaviour
         }
 
         float speed = 1;
+
         if (t < 1) {
             int lastNodeIndex = Mathf.FloorToInt(t * positionsContainer.childCount);
             float speedVelocitySmoothingFactor = constantVelocity ? consistentSpeedMultipliers[lastNodeIndex] : 1;
-
             speed = 1f / roundTripTime * speedVelocitySmoothingFactor;
-            MoveObject(t, smoothSpeed == 0 ? 1 : Time.deltaTime * smoothSpeed * positionsContainer.childCount);
         }
+
+        MoveObject(Mathf.Min(t, 1), smoothSpeed == 0 ? 1 : Time.deltaTime * smoothSpeed * positionsContainer.childCount);
 
         t += Time.fixedDeltaTime * speed;
         t = t % (1 + resetTime);
@@ -54,6 +57,8 @@ public class ConstantMovement : MonoBehaviour
     /// </summary>
     private void MoveObject(float t, float smoothT)
     {
+        t = Mathf.Min(t, 0.9999999f);
+
         float fullT = t * positionsContainer.childCount;
         float nodeLevelT = fullT % 1;
 
@@ -73,6 +78,16 @@ public class ConstantMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.Lerp(r1, r2, nodeLevelT);
         Quaternion nextRot = Quaternion.Lerp(movingObject.transform.rotation, targetRotation, smoothT);
         movingObject.MoveRotation(nextRot);
+
+        if (targetTransform) 
+        {
+            Debug.DrawLine(movingObject.position, targetPos, Color.white);
+            Debug.DrawLine(targetTransform.position, p1, Color.white);
+            Debug.DrawLine(targetTransform.position, p2, Color.white);
+
+            targetTransform.rotation = targetRotation;
+            targetTransform.position = targetPos;
+        }
     }
 
     private void CalculatePathDistances()
