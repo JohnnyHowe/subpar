@@ -7,6 +7,7 @@ public interface IChuteAble
     void SetFrozen(bool frozen);
     void SetPosition(Vector3 position);
     void SetVelocity(Vector3 velocity);
+    void AddVelocity(Vector3 velocityChange);
 }
 
 [RequireComponent(typeof(Rigidbody))]
@@ -35,5 +36,9 @@ public class ChuteAble : MonoBehaviour, IChuteAble
     public void SetVelocity(Vector3 velocity)
     {
         rb.Value.velocity = velocity;
+    }
+
+    public void AddVelocity(Vector3 velocityChange) {
+        rb.Value.velocity += velocityChange;
     }
 }
