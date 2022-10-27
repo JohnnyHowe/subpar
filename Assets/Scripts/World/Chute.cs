@@ -13,6 +13,10 @@ public class Chute : MonoBehaviour
     [SerializeField] private Vector3 localExitNudge = Vector3.zero;
     [SerializeField] private float releaseDelay = 1f;
     [SerializeField] private float maxReleasedTimeInTrigger = 1f;
+    [Header("Debug Bits")]
+    [SerializeField] private float arrowOffset = 1f;
+    [SerializeField] private float velocityArrowSizeScale = 1f;
+
     private List<IChuteAble> doNotTeleport;
     CancellationTokenSource cancellationTokenSource;
 
@@ -23,6 +27,28 @@ public class Chute : MonoBehaviour
         teleportTrigger.onTriggerExit.AddListener((collider) => ExecuteIfChuteAble(collider.gameObject, OnTeleportTriggerExit));
         nudgeTrigger.onTriggerExit.AddListener((collider) => ExecuteIfChuteAble(collider.gameObject, OnNudgeTriggerExit));
         cancellationTokenSource = new CancellationTokenSource();
+    }
+
+    void Update()
+    {
+        if (Debug.isDebugBuild)
+        {
+            // Next chute
+            Vector3 dir = nextChute.transform.position - transform.position;
+            Vector3 offset = dir.normalized * arrowOffset;
+            DrawArrow.ForDebug(transform.position + offset, dir - offset * 2);
+
+            // Exit dir
+            DrawArrow.ForDebug(transform.position, transform.TransformVector(localExitVelocity) * velocityArrowSizeScale, Color.red);
+            if (localExitNudge.magnitude != 0)
+            {
+                DrawArrow.ForDebug(
+                    transform.position + transform.TransformVector(localExitVelocity) * velocityArrowSizeScale,
+                    transform.TransformVector(localExitNudge) * velocityArrowSizeScale,
+                    Color.red
+                    );
+            }
+        }
     }
 
     delegate void TriggerDelegate(IChuteAble chuteAble);
@@ -41,7 +67,7 @@ public class Chute : MonoBehaviour
 
     private void OnNudgeTriggerExit(IChuteAble chuteAble)
     {
-        chuteAble.AddVelocity(transform.TransformVector(localExitNudge));    
+        chuteAble.AddVelocity(transform.TransformVector(localExitNudge));
     }
 
     private void OnTeleportTriggerEnter(IChuteAble chuteAble)

@@ -727,6 +727,8 @@ MonoBehaviour:
   localExitNudge: {x: 0, y: 0, z: 0}
   releaseDelay: 1
   maxReleasedTimeInTrigger: 1
+  arrowOffset: 1
+  velocityArrowSizeScale: 0.3
 --- !u!1 &99067599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,6 +2544,8 @@ MonoBehaviour:
   localExitNudge: {x: 0, y: 0, z: 0}
   releaseDelay: 1
   maxReleasedTimeInTrigger: 1
+  arrowOffset: 1
+  velocityArrowSizeScale: 0.3
 --- !u!114 &792277329 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8696162642496184528, guid: 07dc9bbf107354879a2bb925608f1e8d, type: 3}
@@ -4979,6 +4983,8 @@ MonoBehaviour:
   localExitNudge: {x: 1, y: 0, z: 0}
   releaseDelay: 1
   maxReleasedTimeInTrigger: 1
+  arrowOffset: 1
+  velocityArrowSizeScale: 0.3
 --- !u!1 &1840562059
 GameObject:
   m_ObjectHideFlags: 0
