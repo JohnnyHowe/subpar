@@ -1,42 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Chute : MonoBehaviour
 {
     [SerializeField] private Chute nextChute;
     [SerializeField] private ColliderEvents trigger;
-    [SerializeField] private Vector3 exitVelocity = Vector3.up;
-
-    [SerializeField] private List<GameObject> doNotTeleport;
+    [SerializeField] private Vector3 localExitVelocity = Vector3.up;
+    [SerializeField] private float releaseDelay = 1f;
+    private List<IChuteAble> doNotTeleport;
 
     void Awake()
     {
-        doNotTeleport = new List<GameObject>();
+        doNotTeleport = new List<IChuteAble>();
         trigger.onTriggerEnter.AddListener((c) => OnTriggerEnter(c));
         trigger.onTriggerExit.AddListener((c) => OnTriggerExit(c));
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (!doNotTeleport.Contains(collider.transform.gameObject))
+        if (collider.gameObject.TryGetComponent<IChuteAble>(out IChuteAble chuteAble))
         {
-            nextChute.TeleportTo(collider.transform);
+            if (!doNotTeleport.Contains(chuteAble))
+            {
+                nextChute.TeleportTo(chuteAble);
+            }
         }
     }
 
     void OnTriggerExit(Collider collider)
     {
-        doNotTeleport.Remove(collider.transform.gameObject);
+        if (collider.gameObject.TryGetComponent<IChuteAble>(out IChuteAble chuteAble))
+        {
+            doNotTeleport.Remove(chuteAble);
+        }
     }
 
-    public void TeleportTo(Transform objectTransform)
+    public void TeleportTo(IChuteAble chuteAble)
     {
-        if (!doNotTeleport.Contains(objectTransform.gameObject))
+        if (!doNotTeleport.Contains(chuteAble))
         {
-            doNotTeleport.Add(objectTransform.gameObject);
-            objectTransform.position = transform.position;
-            objectTransform.GetComponent<Rigidbody>().velocity = exitVelocity;
+            doNotTeleport.Add(chuteAble);
+            chuteAble.SetFrozen(true);
+            chuteAble.SetPosition(trigger.transform.position);
+            chuteAble.SetVelocity(Vector3.zero);
+            UnfreezeInTime(chuteAble, releaseDelay);
         }
+    }
+
+    private async void UnfreezeInTime(IChuteAble chuteAble, float seconds)
+    {
+        await Task.Delay(Mathf.FloorToInt(seconds * 1000));
+        chuteAble.SetFrozen(false);
+        chuteAble.SetVelocity(transform.TransformVector(localExitVelocity));
     }
 }
