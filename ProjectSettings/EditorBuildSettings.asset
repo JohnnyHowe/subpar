@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BasicStages/Basic1.unity
     guid: 09f42561e884ae54da48befeaf607f5a
+  - enabled: 1
+    path: Assets/Scenes/BasicStages/Basic2.unity
+    guid: ba345c1a578f2e9408c0f8b68e51eb52
+  - enabled: 1
+    path: Assets/Scenes/BasicStages/Basic3.unity
+    guid: b4d2e9bb281eb4640af3532443d92bc0
   m_configObjects: {}

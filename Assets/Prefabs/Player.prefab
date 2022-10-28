@@ -841,10 +841,10 @@ MonoBehaviour:
   ringSpinSpeed: 90
   arrowCenterOffset: 2
   aimSpeed: 25
-  powerMultiplier: 1000
+  powerMultiplier: 10
   inputRaycastPlane: {fileID: 0}
   minAimDistance: 0.05
-  powerSensitivity: 0.5
+  powerSensitivity: 0.2
 --- !u!114 &5236652198172123234
 MonoBehaviour:
   m_ObjectHideFlags: 0

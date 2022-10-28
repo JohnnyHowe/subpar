@@ -181,7 +181,7 @@ public class Ball : MonoBehaviour
 
     public void Shoot()
     {
-        ThisRigidBody.AddForce(GetShootDirection() * power * powerMultiplier);
+        ThisRigidBody.velocity = GetShootDirection().normalized * power * powerMultiplier;
     }
 
     private Vector3 GetShootDirection()
