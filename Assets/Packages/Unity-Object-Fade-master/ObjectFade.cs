@@ -6,7 +6,7 @@ public class ObjectFade : MonoBehaviour
 {
     public float fadeSpeed = 10f;
     public float fadeTo = 1f;
-    public float fadeFrom = 0.5f;
+    public float fadeFrom = 0.51f;
 
     FadeCheck fadeCheck;
     Renderer objectRenderer;

@@ -66,4 +66,10 @@ public class GameController : GameSingleton<GameController>
         // inputController.enabled = false;
         ball.Value.SetMoveable(true);
     }
+
+    public void OnLevelComplete()
+    {
+        Debug.Log("Level Complete!");
+        Restart();
+    }
 }
