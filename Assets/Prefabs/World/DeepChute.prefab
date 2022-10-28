@@ -79,8 +79,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3441359003337910384}
+  - component: {fileID: 511126715588989124}
   m_Layer: 0
-  m_Name: HoleTile
+  m_Name: DeepChute
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,6 +105,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &511126715588989124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852672234439220419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a0a14695af94f6d91b445274638f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextChute: {fileID: 0}
+  teleportTrigger: {fileID: 4011820934515765977}
+  nudgeTrigger: {fileID: 8696162642496184528}
+  localExitVelocity: {x: 0, y: 1, z: 0}
+  localExitNudge: {x: 0, y: 0, z: 0}
+  releaseDelay: 1
+  maxReleasedTimeInTrigger: 1
+  arrowOffset: 1
+  velocityArrowSizeScale: 1
 --- !u!1 &5111891540074115305
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,10 +263,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5477749408508380018, guid: 685f162605dc5436bac6cacaa6a95206, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.9998999
+      objectReference: {fileID: 0}
+    - target: {fileID: -5477749408508380018, guid: 685f162605dc5436bac6cacaa6a95206, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000017881396
+      objectReference: {fileID: 0}
+    - target: {fileID: -5477749408508380018, guid: 685f162605dc5436bac6cacaa6a95206, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9999998
+      objectReference: {fileID: 0}
+    - target: {fileID: -5477749408508380018, guid: 685f162605dc5436bac6cacaa6a95206, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00000017881389
+      objectReference: {fileID: 0}
     - target: {fileID: -4683669308469848369, guid: 685f162605dc5436bac6cacaa6a95206, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 55fab25cd6e93be43910bee6b7bbcb16, type: 2}
+      objectReference: {fileID: 2100000, guid: 0afa86baa1469ab48a34b5488a595ffe, type: 2}
     - target: {fileID: 919132149155446097, guid: 685f162605dc5436bac6cacaa6a95206, type: 3}
       propertyPath: m_Name
       value: hole-tile

@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour
 
     bool pointerMovedEnough = false;
     Vector3 lastEndTouch = Vector3.zero;
+    private CachedMember<BallFriction> ballFriction;
 
     Rigidbody ThisRigidBody
     {
@@ -37,6 +38,11 @@ public class Ball : MonoBehaviour
     private float steeringAngle = 0;    // relative to -z
     private float power = 0;    // between 0 and 1
     bool moveable = true;
+
+    void Awake()
+    {
+        ballFriction = new CachedMember<BallFriction>(() => GetComponent<BallFriction>());
+    }
 
     void Start()
     {
@@ -75,7 +81,7 @@ public class Ball : MonoBehaviour
                 Vector3 rawEndTouch = (Vector3)nEndTouch;
                 power = Mathf.Clamp((startTouch - rawEndTouch).magnitude * powerSensitivity, 0, 1);
                 Vector3 goalEndTouch = startTouch + (rawEndTouch - startTouch).normalized * power;
-                Vector3 endTouch = Vector3.Lerp(lastEndTouch, goalEndTouch, justStarted? 1: Mathf.Min(1, Time.deltaTime * aimSpeed));
+                Vector3 endTouch = Vector3.Lerp(lastEndTouch, goalEndTouch, justStarted ? 1 : Mathf.Min(1, Time.deltaTime * aimSpeed));
                 lastEndTouch = endTouch;
 
                 float aimAngle = Vector3.SignedAngle(Vector3.forward, (endTouch - startTouch), Vector3.up);
@@ -197,6 +203,6 @@ public class Ball : MonoBehaviour
 
     public float GetSpeed()
     {
-        return ThisRigidBody.velocity.magnitude;
+        return ballFriction.Value.VelocityRelativeToGround().magnitude;
     }
 }

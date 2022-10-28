@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6322239748265384536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4310127101021332547}
+  - component: {fileID: 5525766362895487803}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4310127101021332547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322239748265384536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8755394103362678900}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5525766362895487803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322239748265384536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a089880a20772045992859cf687c7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instantiated: 0
+  stages:
+  - {fileID: 11400000, guid: b30696255fb30a74bb6a2006703c254e, type: 2}
 --- !u!1 &6914335689012017003
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,6 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8755394103362678900}
+  - component: {fileID: 5912841999503195736}
   m_Layer: 0
   m_Name: AppSystems
   m_TagString: Untagged
@@ -29,9 +77,22 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2770257721493380513}
+  - {fileID: 4310127101021332547}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5912841999503195736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6914335689012017003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc519e6abf43fc4189598d42fe6cdb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7683097778219570739
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,6 +140,7 @@ MonoBehaviour:
   instantiated: 0
   pointerStartPosition: {x: 0, y: 0}
   pointerPosition: {x: 0, y: 0}
+  singleFramePositionChange: {x: 0, y: 0}
   pointerDown: 0
   pointerUp: 0
   pointerHeld: 0

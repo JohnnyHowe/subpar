@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218bcb14dccc8394e83b97d97b7dfdc3, type: 3}
+  m_Name: BasicStage
+  m_EditorClassIdentifier: 
+  title: Basic
+  levels:
+  - sceneReference:
+      sceneAsset: {fileID: 102900000, guid: 09f42561e884ae54da48befeaf607f5a, type: 3}
+      scenePath: Assets/Scenes/BasicStage/Basic1.unity
+  - sceneReference:
+      sceneAsset: {fileID: 102900000, guid: ba345c1a578f2e9408c0f8b68e51eb52, type: 3}
+      scenePath: Assets/Scenes/BasicStage/Basic2.unity
+  - sceneReference:
+      sceneAsset: {fileID: 102900000, guid: b4d2e9bb281eb4640af3532443d92bc0, type: 3}
+      scenePath: Assets/Scenes/BasicStage/Basic3.unity
+  - sceneReference:
+      sceneAsset: {fileID: 102900000, guid: c44dc9a731109614f9f5cad688000405, type: 3}
+      scenePath: Assets/Scenes/BasicStage/Basic4.unity
+  - sceneReference:
+      sceneAsset: {fileID: 102900000, guid: 77415365f122b96459bfd011753037ba, type: 3}
+      scenePath: Assets/Scenes/BasicStage/Basic5.unity
+  - sceneReference:
+      sceneAsset: {fileID: 102900000, guid: 95ac1129f4c0dd0449306b70eb235aaa, type: 3}
+      scenePath: Assets/Scenes/BasicStage/Basic6.unity

@@ -12,12 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Playground.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/BasicStages/Basic1.unity
+    path: Assets/Scenes/BasicStage/Basic1.unity
     guid: 09f42561e884ae54da48befeaf607f5a
   - enabled: 1
-    path: Assets/Scenes/BasicStages/Basic2.unity
+    path: Assets/Scenes/BasicStage/Basic2.unity
     guid: ba345c1a578f2e9408c0f8b68e51eb52
   - enabled: 1
-    path: Assets/Scenes/BasicStages/Basic3.unity
+    path: Assets/Scenes/BasicStage/Basic3.unity
     guid: b4d2e9bb281eb4640af3532443d92bc0
+  - enabled: 1
+    path: Assets/Scenes/BasicStage/Basic4.unity
+    guid: c44dc9a731109614f9f5cad688000405
+  - enabled: 1
+    path: Assets/Scenes/BasicStage/Basic5.unity
+    guid: 77415365f122b96459bfd011753037ba
+  - enabled: 1
+    path: Assets/Scenes/BasicStage/Basic6.unity
+    guid: 95ac1129f4c0dd0449306b70eb235aaa
   m_configObjects: {}

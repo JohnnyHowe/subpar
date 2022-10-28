@@ -8,6 +8,7 @@ public class TouchInput: AppSystem<TouchInput>
     // positions are between (0, 0) = bottom left and (1, 1) = top right
     public Vector2 pointerStartPosition;
     public Vector2 pointerPosition;
+    public Vector2 singleFramePositionChange;
 
     public bool pointerDown;
     public bool pointerUp;
@@ -15,6 +16,7 @@ public class TouchInput: AppSystem<TouchInput>
 
     void Update()
     {
+        Vector2 lastPointerPosition = pointerPosition;
         bool lastPointerHeld = pointerHeld;
         pointerHeld = false;
 
@@ -33,5 +35,11 @@ public class TouchInput: AppSystem<TouchInput>
         pointerUp = lastPointerHeld && !pointerHeld;
 
         if (pointerDown) pointerStartPosition = pointerPosition;
+        
+        if (!pointerDown && pointerHeld) {
+            singleFramePositionChange = pointerPosition - lastPointerPosition;
+        } else {
+            singleFramePositionChange = Vector2.zero;
+        }
     }
 }
