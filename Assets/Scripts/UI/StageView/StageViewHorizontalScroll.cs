@@ -38,7 +38,8 @@ public class StageViewHorizontalScroll : MonoBehaviour
         }
         else if (TouchInput.Instance.pointerUp)
         {
-            targetT = Mathf.Clamp(Mathf.RoundToInt(t - Mathf.Sign(velocity)), 0, numberStages - 1);
+            float tChangeFromSpeed = Mathf.Sign(velocity);
+            targetT = Mathf.Clamp(Mathf.RoundToInt(t - tChangeFromSpeed), 0, numberStages - 1);
         }
         else
         {

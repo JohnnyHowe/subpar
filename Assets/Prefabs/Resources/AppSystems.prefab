@@ -47,6 +47,8 @@ MonoBehaviour:
   instantiated: 0
   stages:
   - {fileID: 11400000, guid: b30696255fb30a74bb6a2006703c254e, type: 2}
+  - {fileID: 11400000, guid: b30696255fb30a74bb6a2006703c254e, type: 2}
+  - {fileID: 11400000, guid: b30696255fb30a74bb6a2006703c254e, type: 2}
 --- !u!1 &6914335689012017003
 GameObject:
   m_ObjectHideFlags: 0

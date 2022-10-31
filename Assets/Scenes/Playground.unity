@@ -521,7 +521,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &119505481
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -679,7 +678,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &135236518
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -994,7 +992,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &206097977
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1250,7 +1247,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &324832783
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1898,7 +1894,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &544682937
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2185,7 +2180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5236652198172123244, guid: 279b03c3c54c21948aeabb5ba1035174, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.82
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 5236652198172123244, guid: 279b03c3c54c21948aeabb5ba1035174, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2193,7 +2188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5236652198172123244, guid: 279b03c3c54c21948aeabb5ba1035174, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.65
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 5236652198172123244, guid: 279b03c3c54c21948aeabb5ba1035174, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3656,7 +3651,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &1379507217
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3945,7 +3939,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &1462691490
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4103,7 +4096,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &1467722810
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4294,7 +4286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &1701471042
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4647,7 +4638,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constantDeceleration: 0.1
   proportionalDeceleration: 0.1
-  movingObjectVelocityEffect: 0.5
 --- !u!54 &1812462286
 Rigidbody:
   m_ObjectHideFlags: 0
