@@ -11,15 +11,19 @@ public class GameStateController : GameSingleton<GameStateController>
     {
         aiming,
         rolling,
+        postGame,
     }
 
-    [ReadOnly] [SerializeField] private GameState state = GameState.aiming;
+    [ReadOnly][SerializeField] private GameState state = GameState.aiming;
     [SerializeField] bool verbose = false;
 
-    public GameState State {
+    public GameState State
+    {
         get => state;
-        set {
-            if (state != value) {
+        set
+        {
+            if (state != value)
+            {
                 state = value;
                 OnStateChange();
             }
@@ -28,6 +32,7 @@ public class GameStateController : GameSingleton<GameStateController>
 
     public UnityEvent onAimingStart;
     public UnityEvent onRollingStart;
+    public UnityEvent onPostGameStart;
 
     void Start()
     {
@@ -44,6 +49,9 @@ public class GameStateController : GameSingleton<GameStateController>
                 break;
             case GameState.rolling:
                 onRollingStart.Invoke();
+                break;
+            case GameState.postGame:
+                onPostGameStart.Invoke();
                 break;
         }
     }

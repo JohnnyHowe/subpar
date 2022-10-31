@@ -21,36 +21,37 @@ public class GameController : GameSingleton<GameController>
 
     void FixedUpdate()
     {
-        if (ball.Value.transform.position.y < minBallY) Restart();
-
-        if (GameStateController.Instance.State == GameStateController.GameState.rolling)
+        switch (GameStateController.Instance.State)
         {
+            case GameStateController.GameState.aiming:
+                if (ball.Value.GetSpeed() > maxStillSpeed)
+                {
+                    GameStateController.Instance.State = GameStateController.GameState.rolling;
+                }
+                break;
+            case GameStateController.GameState.rolling:
+                if (ball.Value.transform.position.y < minBallY) Restart();
+                if (ball.Value.GetSpeed() < maxStillSpeed)
+                {
+                    currentStillTime += Time.deltaTime;
+                }
+                else
+                {
+                    currentStillTime = 0;
+                }
 
-            if (ball.Value.GetSpeed() < maxStillSpeed)
-            {
-                currentStillTime += Time.deltaTime;
-            }
-            else
-            {
-                currentStillTime = 0;
-            }
-
-            if (currentStillTime > minStillTime)
-            {
-                currentStillTime = 0;
-                GameStateController.Instance.State = GameStateController.GameState.aiming;
-            }
-        }
-        else
-        {
-            if (ball.Value.GetSpeed() > maxStillSpeed)
-            {
-                GameStateController.Instance.State = GameStateController.GameState.rolling;
-            }
+                if (currentStillTime > minStillTime)
+                {
+                    currentStillTime = 0;
+                    GameStateController.Instance.State = GameStateController.GameState.aiming;
+                }
+                break;
+            case GameStateController.GameState.postGame:
+                break;
         }
     }
 
-    void Restart()
+    public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -69,7 +70,6 @@ public class GameController : GameSingleton<GameController>
 
     public void OnLevelComplete()
     {
-        Debug.Log("Level Complete!");
-        Restart();
+        GameStateController.Instance.State = GameStateController.GameState.postGame;
     }
 }

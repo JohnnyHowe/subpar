@@ -77,8 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca78dbcb2f0914ca25fb7cf8cba573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 0}
-  minBallY: -1
+  minBallY: -2
   maxStillSpeed: 0.1
   minStillTime: 0.5
 --- !u!1 &6093209352526284568
@@ -131,5 +130,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onRollingStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPostGameStart:
     m_PersistentCalls:
       m_Calls: []
