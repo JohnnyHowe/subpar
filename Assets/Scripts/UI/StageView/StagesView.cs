@@ -14,9 +14,9 @@ public class StagesView : MonoBehaviour
     private void CreateView()
     {
         List<Stage> stages = LevelManager.Instance.GetStages();
-        foreach (Stage stage in stages)
+        for (int i = 0; i < stages.Count; i++)
         {
-            Instantiate(stageViewPrototype, stageViewPrototype.transform.parent).Set(stage);
+            Instantiate(stageViewPrototype, stageViewPrototype.transform.parent).Set(stages[i], i + 1);
         }
         stageViewPrototype.gameObject.SetActive(false);
     }

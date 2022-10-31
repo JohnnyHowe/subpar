@@ -48,7 +48,7 @@ namespace Utils {
         }
 
         public static int RandomInt(int minInclusive, int maxInclusive) {
-            return Mathf.FloorToInt(Value() * (maxInclusive - minInclusive)) + minInclusive;
+            return Mathf.FloorToInt(Value() * (maxInclusive - minInclusive + 1)) + minInclusive;
         } 
     }
 }
