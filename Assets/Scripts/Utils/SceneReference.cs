@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System.Text.RegularExpressions;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -47,9 +48,30 @@ namespace Tymski
         }
 #endif
 
+        public SceneAsset SceneAssetReference
+        {
+            get
+            {
+                if (!IsValidSceneAsset) return null;
+                return (SceneAsset)sceneAsset;
+            }
+        }
+
         // This should only ever be set during serialization/deserialization!
         [SerializeField]
         private string scenePath = string.Empty;
+
+        public string SceneName
+        {
+            get
+            {
+                MatchCollection matches = new Regex(@"(?:.+\/)+(.+).unity").Matches(ScenePath);
+
+                if (matches.Count != 1) return "";
+                if (matches[0].Groups.Count != 2) return "";
+                return matches[0].Groups[1].Value;
+            }
+        }
 
         // Use this when you want to actually have the scene path
         public string ScenePath

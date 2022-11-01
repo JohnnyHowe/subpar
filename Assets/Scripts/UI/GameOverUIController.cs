@@ -15,7 +15,7 @@ public class GameOverUIController : MonoBehaviour
     }
 
     public void GoToNextLevel() {
-        
+        LevelManager.Instance.StartNextLevel();   
     }
 
     public void RetryCurrentLevel() {
